@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clan Members</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Clan Members</h1>
+        {% if members %}
+            <div class="card">
+                <ul>
+                    {% for member in members %}
+                        <li class="member">
+                            <a href="{{ url_for('player_info', player_tag=member.tag) }}">
+                                <strong>{{ member.name }}</strong>
+                            </a>
+                            <span>(Role: {{ member.role }}, Trophies: {{ member.trophies }})</span>
+                        </li>
+                    {% endfor %}
+                </ul>                
+            </div>
+        {% else %}
+            <p>No clan members available.</p>
+        {% endif %}
+        <nav>
+            <a href="/">Back to Home</a>
+            <a href="/clan_info">View Clan Info</a>
+        </nav>
+    </div>
+</body>
+</html>

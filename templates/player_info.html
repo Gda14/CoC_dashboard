@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Player Information</h1>
+        {% if player %}
+            <div class="card">
+                <h2>{{ player.name }}</h2>
+                <p><strong>Player Tag:</strong> #{{ player.tag }}</p>
+                <p><strong>Trophies:</strong> {{ player.trophies }}</p>
+                <h3>Troops</h3>
+                <div class="troop-container">
+                    {% if player.troops %}
+                        {% for troop in player.troops %}
+                            <div class="troop-card">
+                                <img src="{{ url_for('static', filename='images/troops/' + troop.name|lower + '.png') }}" alt="{{ troop.name }}" class="troop-image">
+                                <div class="troop-info">
+                                    <strong>{{ troop.name }}</strong>
+                                    <p>Level: {{ troop.level }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No troops information available.</p>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <p>No player information available.</p>
+        {% endif %}
+        <a href="/">Back to Home</a>
+        <a href="/clan_members">View Clan Members</a>
+    </div>
+</body>
+</html>

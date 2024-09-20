@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clan Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Clan Information</h1>
+        {% if clan %}
+            <div class="card">
+                <p><strong>Clan Name:</strong> {{ clan.name }}</p>
+                <p><strong>Clan Level:</strong> {{ clan.clanLevel }}</p>
+                <p><strong>Clan Points:</strong> {{ clan.clanPoints }}</p>
+                <p><strong>Members:</strong> {{ clan.members }}</p>
+                <p><strong>Location:</strong> {{ clan.location.name }}</p>
+                <p><strong>Description:</strong> {{ clan.description }}</p>
+            </div>
+        {% else %}
+            <p>No clan information available.</p>
+        {% endif %}
+        <nav>
+            <a href="/">Back to Home</a>
+            <a href="/clan_members">View Clan Members</a>
+        </nav>
+    </div>
+</body>
+</html>
