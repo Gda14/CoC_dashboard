@@ -6,7 +6,7 @@ Config = configparser.ConfigParser()
 Config.read("config.ini")
 
 # Get API token and Clan ID from the config file
-API_TOKEN = Config.get("clashofclans", "api_token")
+API_TOKEN = Config.get("clashofclans", "api_token_4G")
 CLAN_ID = Config.get("clashofclans", "clan_id")
 
 # Clash of Clans API base URL
