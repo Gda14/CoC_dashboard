@@ -14,7 +14,7 @@
                 <ul>
                     {% for member in members %}
                         <li class="member">
-                            <a href="{{ url_for('player_info', player_tag=member.tag) }}">
+                            <a href="{{ url_for('player_info', tag=member.tag) }}">
                                 <strong>{{ member.name }}</strong>
                             </a>
                             <span>(Role: {{ member.role }}, Trophies: {{ member.trophies }})</span>
