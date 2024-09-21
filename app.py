@@ -59,7 +59,27 @@ def api_request(endpoint):
 
 
 def get_clan_info():
-    return api_request(f"/clans/%23{CLAN_ID}")
+    url = f"{BASE_URL}/clans/%23{CLAN_ID}"
+    response = requests.get(url, headers=headers)
+
+    # Debugging output
+    print(f"Request URL: {url}")
+    print(f"Status Code: {response.status_code}")
+
+    if response.status_code == 200:
+        clan_data = response.json()
+        return {
+            "name": clan_data.get("name"),
+            "tag": clan_data.get("tag"),
+            "trophies": clan_data.get("trophies"),
+            "builderTrophies": clan_data.get("builderTrophies"),
+            "warLeague": clan_data.get("warLeague"),
+            "wins": clan_data.get("warWins"),
+            "losses": clan_data.get("warLosses"),
+            "location": clan_data.get("location"),
+            "badgeUrls": clan_data.get("badgeUrls"),
+        }
+    return None
 
 
 def get_clan_members():
@@ -73,11 +93,6 @@ def get_player_info(player_tag):
 
 @app.route("/")
 def home():
-    return render_template("index.html")
-
-
-@app.route("/clan_info")
-def clan_info():
     clan = get_clan_info()
     return render_template("clan_info.html", clan=clan)
 

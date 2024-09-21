@@ -4,19 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clan Info</title>
+    <style>
+        body {
+            text-align: center; /* Center text */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center items horizontally */
+            justify-content: center; /* Center items vertically */
+            height: 100vh; /* Full viewport height */
+        }
+        img {
+            max-width: 100px; /* Limit logo size */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Clan Information</h1>
+        <h1>{{ clan.name }}</h1>
+        <img src="{{ clan.badgeUrls.medium }}" alt="Clan Logo">
         {% if clan %}
             <div class="card">
-                <p><strong>Clan Name:</strong> {{ clan.name }}</p>
                 <p><strong>Clan Level:</strong> {{ clan.clanLevel }}</p>
                 <p><strong>Clan Points:</strong> {{ clan.clanPoints }}</p>
                 <p><strong>Members:</strong> {{ clan.members }}</p>
                 <p><strong>Location:</strong> {{ clan.location.name }}</p>
                 <p><strong>Description:</strong> {{ clan.description }}</p>
+                <p><strong>Clan ID:</strong> {{ clan.tag }}</p>
+                <p><strong>Total Trophies:</strong> {{ clan.trophies }}</p>
+                <p><strong>Total Builder Trophies:</strong> {{ clan.builderTrophies }}</p>
+                <p>
+                    <strong>Clan War League:</strong>
+                    {% if clan.warLeague %}
+                        {% if clan.warLeague.iconUrls %}
+                            <img src="{{ clan.warLeague.iconUrls.medium }}" alt="{{ clan.warLeague.name }} Icon">
+                        {% endif %}
+                        {{ clan.warLeague.name }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </p>                
+                <p><strong>War Record:</strong> {{ clan.wins }} - {{ clan.losses }}</p>
             </div>
         {% else %}
             <p>No clan information available.</p>
