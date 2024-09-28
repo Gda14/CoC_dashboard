@@ -1,12 +1,23 @@
-{% macro troop_card(troop, max_level) %}
+{% macro troop_card(troop, max_level, image_folder='troops') %}
     <div class="troop-card">
-        <img src="{{ url_for('static', filename='images/troops/' + troop.name|lower + '.png') }}" alt="{{ troop.name }}" class="troop-image">
+        <img src="{{ url_for('static', filename='images/' + image_folder + '/' + troop.name|lower + '.png') }}" alt="{{ troop.name }}" class="troop-image">
         <div class="troop-info">
             <strong>{{ troop.name }}</strong>
             <p>{{ troop.level }}/{{ max_level }}</p>
         </div>
     </div>
 {% endmacro %}
+
+{% macro spell_card(spell, max_level) %}
+    <div class="spell-card">
+        <img src="{{ url_for('static', filename='images/spells/' + spell.name|lower + '.png') }}" alt="{{ spell.name }}" class="spell-image">
+        <div class="spell-info">
+            <strong>{{ spell.name }}</strong>
+            <p>{{ spell.level }}/{{ max_level }}</p>
+        </div>
+    </div>
+{% endmacro %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,32 +28,69 @@
 </head>
 <body>
     <div class="container">
+        <!-- Elixir Troops -->
         <h3>Home Village Troops</h3>
+        <h3>Elixir Troops</h3>
         <div class="troop-grid">
             {% for troop in player.troops %}
-                {% if troop.village == 'home' and troop.name not in ['Super Barbarian', 'Super Archer', 'Super Giant', 'Super Wall Breaker', 'Super Wizard', 'Super Minion', 'Super Valkyrie', 'Super Witch', 'Super Bowler', 'Ice Hound', 'Rocket Balloon', 'Sneaky Goblin', 'Inferno Dragon'] and 'Siege' not in troop.name %}
-                    {{ troop_card(troop, max_levels.get(troop.name, 'N/A')) }}
+                {% if troop.village == 'home' 
+                   and troop.name not in ['Ice Hound', 'Rocket Balloon', 'Sneaky Goblin', 'Inferno Dragon']
+                   and 'Super' not in troop.name 
+                   and troop.name not in siege_machines
+                   and troop.name not in dark_elixir_troops
+                   and troop.name not in pets %}  
+                    {{ troop_card(troop, elixir_troop_max_levels.get(troop.name, 'N/A')) }}
                 {% endif %}
             {% endfor %}
         </div>
-    
+
+        <!-- Dark Elixir Troops -->
+        <h3>Dark Elixir Troops</h3>
+        <div class="troop-grid">
+            {% for troop in player.troops %}
+                {% if troop.village == 'home' and troop.name in dark_elixir_troops %}
+                    {{ troop_card(troop, dark_elixir_troop_max_levels.get(troop.name, 'N/A')) }}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <!-- Spells -->
+        <h3>Spells</h3>
+        <div class="spell-grid">
+            {% for spell in player.spells %}
+                {{ spell_card(spell, spells_max_levels.get(spell.name, 'N/A')) }}
+            {% endfor %}
+        </div>
+
+        <!-- Siege Machines -->
         <h3>Siege Machines</h3>
-        <div class="troop-grid">
-            {% for troop in player.troops %}
-                {% if troop.village == 'home' and troop.name in siege_machines %}
-                    {{ troop_card(troop, max_levels.get(troop.name, 'N/A')) }}
-                {% endif %}
-            {% endfor %}
-        </div>
+        {% if town_hall_level < 12 %}
+            <p>Siege Machines are unlocked at Town Hall 12.</p>
+        {% else %}
+            <div class="troop-grid">
+                {% for troop in player.troops %}
+                    {% if troop.village == 'home' and troop.name in siege_machines %}
+                        {{ troop_card(troop, siege_machine_max_levels.get(troop.name, 'N/A'), 'siege machines') }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <h3>Pets</h3>
+        {% if town_hall_level < 14 %}
+            <p>Pets are unlocked at Town Hall 14.</p>
+        {% else %}
+            <div class="pet-grid">
+                {% for troop in player.troops %}
+                    {% if troop.village == 'home' and troop.name in pets %}
+                        {{ troop_card(troop, pets_max_levels.get(troop.name, 'N/A'), 'pets') }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
     
-        <h3>Builder Base Troops</h3>
-        <div class="troop-grid">
-            {% for troop in player.troops %}
-                {% if troop.village == 'builderBase' %}
-                    {{ troop_card(troop, max_levels.get(troop.name, 'N/A')) }}
-                {% endif %}
-            {% endfor %}
-        </div>
-    </div>    
+    <a href="{{ url_for('clan_members') }}" class="btn btn-back">Back to Clan Members</a>
+
 </body>
 </html>
