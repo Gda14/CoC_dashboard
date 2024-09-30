@@ -393,7 +393,7 @@ DARK_ELIXIR_TROOPS_MAX_LEVELS_BY_LAB = {
         "Golem": 10,
         "Witch": 5,
         "Lava Hound": 6,
-        "Bowler": 5,
+        "Bowler": 6,
         "Ice Golem": 6,
         "Headhunter": 3,
         "Apprentice Warden": 3,
@@ -616,67 +616,128 @@ def player_info(tag):
     )
 
 
-def create_roster(
-    available_any_day, available_one_to_two_days, total_days=7, roster_size=15
-):
+def create_weighted_pool(players_with_weights):
+    weighted_pool = []
+    for player, weight in players_with_weights.items():
+        weighted_pool.extend([player] * weight)  # Repeat player based on weight
+    return weighted_pool
+
+
+def create_roster(players_with_weights, clan_members, total_days=7, roster_size=15):
     # Initialize the roster dictionary
     roster = {f"Day {i}": [] for i in range(1, total_days + 1)}
 
-    # Distribute members available any day
-    for i in range(len(available_any_day)):
-        day = f"Day {i % total_days + 1}"  # Rotate across days
-        roster[day].append(available_any_day[i])
+    # Categorize players based on their weights
+    weight_3_players = [
+        player for player, weight in players_with_weights.items() if weight == 3
+    ]
+    weight_2_players = [
+        player for player, weight in players_with_weights.items() if weight == 2
+    ]
+    weight_1_players = [
+        player for player, weight in players_with_weights.items() if weight == 1
+    ]
 
-    # Randomly assign members available one or two days
-    for member in available_one_to_two_days:
-        chosen_days = random.sample(range(1, total_days + 1), 2)
-        for day in chosen_days:
-            if len(roster[f"Day {day}"]) < roster_size:
-                roster[f"Day {day}"].append(member)
-
-    # Balance out rosters to ensure 15 members per day
+    # Add weight 3 players to each day
     for day in roster:
-        while len(roster[day]) < roster_size:
-            random_member = random.choice(available_any_day + available_one_to_two_days)
-            if random_member not in roster[day]:
-                roster[day].append(random_member)
+        for player in weight_3_players:
+            town_hall_level = next(
+                (m["townHallLevel"] for m in clan_members if m["name"] == player),
+                None,
+            )
+            if len(roster[day]) < roster_size:  # Only add if there's space
+                roster[day].append({"name": player, "townHallLevel": town_hall_level})
+
+    # Add weight 2 players to Days 1, 3, 5, and 7
+    for i, day in enumerate(roster):
+        if i % 2 == 0:  # Adds players to Days 1, 3, 5, and 7
+            for player in weight_2_players:
+                town_hall_level = next(
+                    (m["townHallLevel"] for m in clan_members if m["name"] == player),
+                    None,
+                )
+                if len(roster[day]) < roster_size:
+                    roster[day].append(
+                        {"name": player, "townHallLevel": town_hall_level}
+                    )
+
+    # Add weight 1 players to fill remaining spots as needed
+    for day in roster:
+        for player in weight_1_players:
+            town_hall_level = next(
+                (m["townHallLevel"] for m in clan_members if m["name"] == player),
+                None,
+            )
+            if len(roster[day]) < roster_size:
+                roster[day].append({"name": player, "townHallLevel": town_hall_level})
+
+    # Sort players in each day by their town hall level and ensure no None values
+    for day in roster:
+        # Sort by town hall level in descending order and filter out None values
+        roster[day] = sorted(
+            [player for player in roster[day] if player["townHallLevel"] is not None],
+            key=lambda x: x["townHallLevel"],
+            reverse=True,
+        )
+
+        # Add a lineup number for each player
+        for idx, player in enumerate(roster[day], start=1):
+            player["lineup_number"] = idx
 
     return roster
 
 
 @app.route("/roster")
 def roster_page():
-    # Initialize your lists
-    available_any_day = [
-        "Ace",
-        "coco974",
-        "岑汝轩",
-        "ZeroDay",
-        "sim sim",
-        "Hiken",
-        "Lucille",
-        "Suki",
-        "Lakaï",
-        "TiboTango",
-        "Thiboss",
-        "ru xuan",
-    ]  # Fill this list with player names available any day
-    available_one_to_two_days = [
-        "Shinra",
-        "Sim",
-        "Cocoque",
-        "Bakasable",
-        "SimSim",
-        "mr.khas",
-        "Will",
-        "Kazuto",
-    ]
+    # Fetch clan members data dynamically
+    clan_members = get_clan_members()
+
+    # Add weights to players in regards to availability
+    players_with_weights = {
+        "Ace": 3,
+        "coco974": 3,
+        "岑汝轩": 3,
+        "ZeroDay": 3,
+        "sim sim": 3,
+        "Hiken": 3,
+        "Lucille": 3,
+        "Suki": 2,
+        "LaKaï": 3,
+        "TiboTango": 3,
+        "Thiboss": 3,
+        "ru xuan": 2,
+        "Shinra": 1,
+        "Sim": 1,
+        "Cocoque": 2,
+        "Bakasable": 2,
+        "SimSim": 1,
+        "mr.khas": 0,
+        "Will": 1,
+        "Kazuto": 1,
+        "Macxy": 2,
+    }
 
     # Create the roster
-    roster = create_roster(available_any_day, available_one_to_two_days)
+    roster = create_roster(players_with_weights, clan_members)
 
-    # Render the roster template and pass the roster data
-    return render_template("roster.html", roster=roster)
+    # Count the number of days each player is participating
+    participation_count = {player: 0 for player in players_with_weights.keys()}
+
+    for day, members in roster.items():
+        for member in members:
+            participation_count[
+                member["name"]
+            ] += 1  # Ensure you're using member["name"]
+
+    # Sort participation count by highest first
+    sorted_participation = sorted(
+        participation_count.items(), key=lambda x: x[1], reverse=True
+    )
+
+    # Render the roster template and pass the roster data and participation count
+    return render_template(
+        "roster.html", roster=roster, sorted_participation=sorted_participation
+    )
 
 
 if __name__ == "__main__":

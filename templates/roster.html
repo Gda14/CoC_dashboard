@@ -3,20 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clan Roster</title>
+    <title>Roster</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/roster.css') }}">
 </head>
 <body>
     <div class="container">
         <h1>Clan Roster</h1>
-        {% for day, members in roster.items() %}
-            <h3>{{ day }}</h3>
-            <ul>
-                {% for member in members %}
-                    <li>{{ member }}</li>
-                {% endfor %}
-            </ul>
-        {% endfor %}
+        <div class="roster-container">
+            {% for day, players in roster.items() %}
+                <div class="day-card">
+                    <h3>{{ day }}</h3>
+                    <ul>
+                        {% for player in players %}
+                            <li>
+                                <span class="player-name">{{ loop.index }}. {{ player.name }}</span>
+                                <span class="townhall-level">(TH: {{ player.townHallLevel }})</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+
+        <h2>Participation Count</h2>
+        <div class="participation-grid">
+            {% for player, count in sorted_participation %}
+                <div class="participation-card">
+                    <h4>{{ player }}</h4>
+                    <p>{{ count }} day(s)</p>
+                </div>
+            {% endfor %}
+        </div>
+        <nav>
+            <a href="/" class="btn">Back to Home</a>
+        </nav>
     </div>
 </body>
 </html>

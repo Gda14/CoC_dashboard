@@ -53,8 +53,8 @@
             <p>No clan information available.</p>
         {% endif %}
         <nav>
-            <a href="/">Back to Home</a>
-            <a href="/clan_members">View Clan Members</a>
+            <a href="/clan_members" class="btn">View Clan Members</a>
+            <a href="{{ url_for('roster_page') }}" class="btn">CWL Roster</a>
         </nav>
     </div>
 </body>

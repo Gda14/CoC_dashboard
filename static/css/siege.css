@@ -1,0 +1,9 @@
+.siege-machine {
+    background-color: #f0f0f5;
+    border: 2px solid #ccccff;
+}
+
+.siege-machine .troop-info {
+    font-weight: bold;
+    color: #333399;
+}

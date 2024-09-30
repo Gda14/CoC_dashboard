@@ -7,7 +7,7 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1200px;
     margin: auto;
     background: white;
     padding: 20px;
@@ -66,95 +66,6 @@ button:hover {
     background-color: #3498db;
 }
 
-.troop-grid, .spell-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 20px;
-    padding: 20px;
-}
-
-/* Center the player name and Town Hall image */
-.player-name {
-    text-align: center;
-    font-size: 2em;
-    margin-top: 20px;
-}
-
-.town-hall-container {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    margin: 20px 0;
-}
-
-.town-hall-image {
-    max-width: 150px;
-    height: auto;
-}
-
-/* General container for troop and spell cards */
-.troop-card, .spell-card {
-    width: 120px; /* Set a fixed width */
-    height: auto; /* Set a fixed height */
-    max-width: 100%;
-    display: flex; /* Use flexbox to align items */
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center items vertically */
-    margin: 10px; /* Spacing between cards */
-    border: 1px solid #ccc; /* Optional: border around cards */
-    border-radius: 8px; /* Optional: rounded corners */
-    overflow: hidden; /* Ensure content doesn't overflow */
-    background-color: #f9f9f9; /* Optional: background color */
-}
-
-/* Set the image size */
-.troop-image, .spell-image {
-    width: 100%; /* Make the image width 100% of the card */
-    height: 100%; /* Make the image height 100% of the card */
-    object-fit: contain; /* Crop the image to fit the container */
-}
-
-.troop-info, .spell-info {
-    text-align: center; /* Center text in info */
-    margin-top: 8px; /* Space between image and text */
-    font-size: 14px; /* Font size */
-}
-
-/* Optional: Add a hover effect */
-.troop-card:hover, .spell-card:hover {
-    transform: scale(1.05); /* Slightly enlarge the card on hover */
-    transition: transform 0.2s; /* Smooth transition */
-}
-
-/* Custom styling for Siege Machines */
-.siege-machine {
-    background-color: #f0f0f5;
-    border: 2px solid #ccccff;
-}
-
-/* Optional styling for a unique look */
-.siege-machine .troop-info {
-    font-weight: bold;
-    color: #333399;
-}
-
-.pet-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.pet-card {
-    width: 100px; /* Set to your preferred size */
-    text-align: center;
-    margin: 10px;
-}
-
-.pet-image {
-    width: 100%; /* Ensures it fills the card */
-    height: auto; /* Maintain aspect ratio */
-}
 
 .btn {
     display: inline-block;
@@ -177,27 +88,6 @@ button:hover {
     margin-bottom: 20px;
 }
 
-.roster-table {
-    width: 50%;
-    margin: 20px auto;
-    border-collapse: collapse;
-    font-size: 18px;
-    text-align: left;
-}
-
-.roster-table th, .roster-table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-}
-
-.roster-table th {
-    background-color: #f2f2f2;
-    text-align: center;
-}
-
-.roster-table td {
-    text-align: center;
-}
 
 /* Responsive design for smaller screens */
 @media (max-width: 600px) {

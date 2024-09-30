@@ -1,0 +1,16 @@
+.pet-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.pet-card {
+    width: 100px; /* Set to your preferred size */
+    text-align: center;
+    margin: 10px;
+}
+
+.pet-image {
+    width: 100%; /* Ensures it fills the card */
+    height: auto; /* Maintain aspect ratio */
+}

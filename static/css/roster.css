@@ -1,0 +1,64 @@
+.roster-table {
+    width: 100%; /* Use full width */
+    margin: 20px 0;
+    border-collapse: collapse;
+    font-size: 18px;
+    text-align: left;
+}
+
+.roster-table th, .roster-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.roster-table th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.roster-table td {
+    text-align: center;
+}
+
+/* Roster container styling */
+.roster-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); /* 7 equal columns for each day */
+    gap: 10px; /* Space between the grid items */
+    padding: 20px;
+    width: 96%; /* Use full width of the page */
+}
+
+.day-card {
+    background-color: #f9f9f9; /* Light background color */
+    border: 1px solid #ddd; /* Light border for definition */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px;
+    text-align: center; /* Centered text */
+}
+
+/* Add styles for the names and town hall level */
+.player-name {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.townhall-level {
+    font-size: 14px;
+    color: #666; /* Gray color for town hall level */
+}
+
+.participation-grid {
+    display: grid; /* Use CSS Grid */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjusts for 3 columns */
+    gap: 20px; /* Spacing between cards */
+    margin-top: 20px; /* Space above the participation grid */
+}
+
+.participation-card {
+    background: #ecf0f1; /* Light background for the card */
+    border-radius: 8px; /* Rounded corners */
+    padding: 15px; /* Inner spacing */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center text */
+}
