@@ -32,18 +32,19 @@
 <body>
     <div class="container">
         <!-- Player Name -->
-        <h1 class="player-name">{{ player.name }}</h1>
+        <h1 class="player-name">{{ player.name }} {{ player.tag }}</h1> 
 
-        <!-- Town Hall Image -->
-        <div class="player-info">
-            <div class="townhall-image">
-                <img src="{{ url_for('static', filename='images/townhalls/townhall_' + player.townHallLevel|string  + '.png') }}" alt="Townhall {{ player.townHallLevel }}">
-            </div>
-        </div>
         
         
         <!-- Elixir Troops -->
         <h3>Home Village Troops</h3>
+        <!-- Town Hall Image -->
+        <div class="player-info">
+            <div class="townhall-image">
+                <img src="{{ url_for('static', filename='images/townhalls/townhall_' + player.townHallLevel|string  + '.png') }}" alt="Townhall {{ player.townHallLevel }}">
+                <h2>Town Hall {{ player.townHallLevel }}</h3>
+            </div>
+        </div>
         <h3>Elixir Troops</h3>
         <div class="troop-grid">
             {% for troop in player.troops %}
@@ -102,9 +103,10 @@
                 {% endfor %}
             </div>
         {% endif %}
+        <a href="{{ url_for('clan_members') }}" class="btn">Back to Clan Members</a>
+
     </div>
     
-    <a href="{{ url_for('clan_members') }}" class="btn btn-back">Back to Clan Members</a>
-
+    
 </body>
 </html>

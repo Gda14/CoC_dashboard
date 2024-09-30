@@ -3,6 +3,7 @@
     text-align: center;
     font-size: 2em;
     margin-top: 20px;
+    font-family: 'Supercell Magic', sans-serif;
 }
 
 .town-hall-container {
@@ -13,10 +14,15 @@
 }
 
 
-.town-hall-image {
-    max-width: 150px;
-    height: auto;
+.townhall-image {
+    display: flex;
+    align-items: center; /* Vertically align the image and text */
 }
+
+.townhall-image img {
+    margin-right: 10px; /* Space between image and text */
+}
+
 
 .troop-grid, .spell-grid {
     display: grid;
@@ -57,3 +63,18 @@
     transform: scale(1.05); /* Slightly enlarge the card on hover */
     transition: transform 0.2s; /* Smooth transition */
 }
+
+@font-face {
+    font-family: 'Supercell Magic';
+    src: url('/static/fonts/Supercell-Magic.ttf'); /* URL to your font file */
+    font-weight: normal;
+    font-style: normal;
+}
+
+.townhall-image h2 {
+    font-family: 'Supercell Magic', sans-serif;
+    font-size: 1.5em; /* Adjust size as per your needs */
+    margin: 0;
+}
+
+
