@@ -73,6 +73,25 @@ button:hover {
     padding: 20px;
 }
 
+/* Center the player name and Town Hall image */
+.player-name {
+    text-align: center;
+    font-size: 2em;
+    margin-top: 20px;
+}
+
+.town-hall-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin: 20px 0;
+}
+
+.town-hall-image {
+    max-width: 150px;
+    height: auto;
+}
+
 /* General container for troop and spell cards */
 .troop-card, .spell-card {
     width: 120px; /* Set a fixed width */
@@ -151,6 +170,33 @@ button:hover {
 
 .btn-back {
     background-color: #f44336; /* Red background for the 'Back' button */
+}
+
+.center-text {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.roster-table {
+    width: 50%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-size: 18px;
+    text-align: left;
+}
+
+.roster-table th, .roster-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.roster-table th {
+    background-color: #f2f2f2;
+    text-align: center;
+}
+
+.roster-table td {
+    text-align: center;
 }
 
 /* Responsive design for smaller screens */

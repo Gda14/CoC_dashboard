@@ -28,6 +28,17 @@
 </head>
 <body>
     <div class="container">
+        <!-- Player Name -->
+        <h1 class="player-name">{{ player.name }}</h1>
+
+        <!-- Town Hall Image -->
+        <div class="player-info">
+            <div class="townhall-image">
+                <img src="{{ url_for('static', filename='images/townhalls/townhall_' + player.townHallLevel|string  + '.png') }}" alt="Townhall {{ player.townHallLevel }}">
+            </div>
+        </div>
+        
+        
         <!-- Elixir Troops -->
         <h3>Home Village Troops</h3>
         <h3>Elixir Troops</h3>

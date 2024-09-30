@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 import configparser
 import requests
+import random
 
 app = Flask(__name__)
 
@@ -613,6 +614,69 @@ def player_info(tag):
         pets=PETS,
         # builder_base_max_levels=builder_base_max_levels,
     )
+
+
+def create_roster(
+    available_any_day, available_one_to_two_days, total_days=7, roster_size=15
+):
+    # Initialize the roster dictionary
+    roster = {f"Day {i}": [] for i in range(1, total_days + 1)}
+
+    # Distribute members available any day
+    for i in range(len(available_any_day)):
+        day = f"Day {i % total_days + 1}"  # Rotate across days
+        roster[day].append(available_any_day[i])
+
+    # Randomly assign members available one or two days
+    for member in available_one_to_two_days:
+        chosen_days = random.sample(range(1, total_days + 1), 2)
+        for day in chosen_days:
+            if len(roster[f"Day {day}"]) < roster_size:
+                roster[f"Day {day}"].append(member)
+
+    # Balance out rosters to ensure 15 members per day
+    for day in roster:
+        while len(roster[day]) < roster_size:
+            random_member = random.choice(available_any_day + available_one_to_two_days)
+            if random_member not in roster[day]:
+                roster[day].append(random_member)
+
+    return roster
+
+
+@app.route("/roster")
+def roster_page():
+    # Initialize your lists
+    available_any_day = [
+        "Ace",
+        "coco974",
+        "岑汝轩",
+        "ZeroDay",
+        "sim sim",
+        "Hiken",
+        "Lucille",
+        "Suki",
+        "Lakaï",
+        "TiboTango",
+        "Thiboss",
+        "ru xuan",
+    ]  # Fill this list with player names available any day
+    available_one_to_two_days = [
+        "Shinra",
+        "Sim",
+        "Cocoque",
+        "Bakasable",
+        "SimSim",
+        "mr.khas",
+        "Will",
+        "Kazuto",
+    ]
+
+    # Create the roster
+    roster = create_roster(available_any_day, available_one_to_two_days)
+
+    # Render the roster template and pass the roster data
+    return render_template("roster.html", roster=roster)
 
 
 if __name__ == "__main__":
