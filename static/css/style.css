@@ -110,9 +110,3 @@ button:hover {
     }
 }
 
-@font-face {
-    font-family: 'Supercell Magic';
-    src: url('{{ url_for('static', filename='fonts/Supercell-Magic.ttf') }}') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
