@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Ranking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/equipment.css') }}">
+    <script>
+        function toggleView(view) {
+            const individual = document.getElementById("individual-view");
+            const synergies = document.getElementById("synergies-view");
+
+            if (view === 'individual') {
+                individual.style.display = "grid";
+                synergies.style.display = "none";
+            } else {
+                individual.style.display = "none";
+                synergies.style.display = "flex";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Equipment Ranking</h1>
+        <div class="toggle-buttons">
+            <button class="toggle-button" onclick="toggleView('individual')">Individual</button>
+            <button class="toggle-button" onclick="toggleView('synergies')">Synergies</button>
+        </div>
+
+        <!-- Individual View -->
+        <div id="individual-view" class="individual">
+            <div class="equipment-grid">
+                {% for item in equipment_list %}
+                    <div class="equipment-card">
+                        <img src="{{ url_for('static', filename='images/equipment/' + item.image) }}" alt="{{ item.name }}">
+                        <p class="rank">#{{ item.rank }}</p>
+                        <p class="name">{{ item.name }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Synergies View -->
+        <div id="synergies-view" class="synergies">
+            <div class="synergies-row">
+                <div class="hero-columns-container">
+                    <!-- Hero Column for King -->
+                    <div class="hero-column">
+                        <img src="{{ url_for('static', filename='images/heroes/king.png') }}" alt="King" class="hero">
+                        <h3>King</h3>
+                        {% for pair in king_synergies %}
+                        <div class="equipment-pair">
+                            <span class="pair-number">#{{ loop.index }}</span>
+                            <div class="image-container">
+                                <img src="{{ url_for('static', filename='images/equipment/' + pair[0].image) }}" alt="{{ pair[0].name }}">
+                                <p class="name">{{ pair[0].name }}</p> <!-- Equipment Name -->
+                            </div>
+                            <div class="image-container">
+                                <img src="{{ url_for('static', filename='images/equipment/' + pair[1].image) }}" alt="{{ pair[1].name }}">
+                                <p class="name">{{ pair[1].name }}</p> <!-- Equipment Name -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Repeat for Queen, Warden, and Champion Columns -->
+                    <div class="hero-column">
+                        <img src="{{ url_for('static', filename='images/heroes/queen.png') }}" alt="Queen" class="hero">
+                        <h3>Queen</h3>
+                        {% for pair in queen_synergies %}
+                        <div class="equipment-pair">
+                            <span class="pair-number">#{{ loop.index }}</span>
+                            <div class="image-container">
+                                <img src="{{ url_for('static', filename='images/equipment/' + pair[0].image) }}" alt="{{ pair[0].name }}">
+                                <p class="name">{{ pair[0].name }}</p> <!-- Equipment Name -->
+                            </div>
+                            <div class="image-container">
+                                <img src="{{ url_for('static', filename='images/equipment/' + pair[1].image) }}" alt="{{ pair[1].name }}">
+                                <p class="name">{{ pair[1].name }}</p> <!-- Equipment Name -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Repeat for Warden and Champion Columns -->
+                    <div class="hero-column">
+                        <img src="{{ url_for('static', filename='images/heroes/grand_warden.png') }}" alt="Warden" class="hero">
+                        <h3>Grand Warden</h3>
+                        {% for pair in warden_synergies %}
+                        <div class="equipment-pair">
+                            <span class="pair-number">#{{ loop.index }}</span>
+                            <div class="image-container">
+                                <img src="{{ url_for('static', filename='images/equipment/' + pair[0].image) }}" alt="{{ pair[0].name }}">
+                                <p class="name">{{ pair[0].name }}</p> <!-- Equipment Name -->
+                            </div>
+                            <div class="image-container">
+                                <img src="{{ url_for('static', filename='images/equipment/' + pair[1].image) }}" alt="{{ pair[1].name }}">
+                                <p class="name">{{ pair[1].name }}</p> <!-- Equipment Name -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="hero-column">
+                        <img src="{{ url_for('static', filename='images/heroes/royal_champion.png') }}" alt="Champion" class="hero">
+                        <h3>Royal Champion</h3>
+                        {% for pair in champion_synergies %}
+                        <div class="equipment-pair">
+                            <span class="pair-number">#{{ loop.index }}</span>
+                            <div class="image-container">
+                                <img src="{{ url_for('static', filename='images/equipment/' + pair[0].image) }}" alt="{{ pair[0].name }}">
+                                <p class="name">{{ pair[0].name }}</p> <!-- Equipment Name -->
+                            </div>
+                            <div class="image-container">
+                                <img src="{{ url_for('static', filename='images/equipment/' + pair[1].image) }}" alt="{{ pair[1].name }}">
+                                <p class="name">{{ pair[1].name }}</p> <!-- Equipment Name -->
+                            </div>
+                        </div>
+                        {% endfor %}
+                    
+                    </div>
+            </div>
+            </div>
+        </div>
+
+        
+    </div>
+</body>
+</html>

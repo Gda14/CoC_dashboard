@@ -526,6 +526,31 @@ MAX_LEVELS_BY_TOWNHALL_PETS = {
     },
 }
 
+EQUIPMENT_LIST = [
+    {"name": "Eternal Tome", "rank": 1, "image": "eternal_tome.png"},
+    {"name": "Fireball", "rank": 2, "image": "fireball.png"},
+    {"name": "Earthquake Boots", "rank": 3, "image": "earthquake_boots.png"},
+    {"name": "Magic Mirror", "rank": 4, "image": "magic_mirror.png"},
+    {"name": "Haste Vial", "rank": 5, "image": "haste_vial.png"},
+    {"name": "Spiky Ball", "rank": 6, "image": "spiky_ball.png"},
+    {"name": "Healer Puppet", "rank": 7, "image": "healer_puppet.png"},
+    {"name": "Giant Gauntlet", "rank": 8, "image": "giant_gauntlet.png"},
+    {"name": "Rocket Spear", "rank": 9, "image": "rocket_spear.png"},
+    {"name": "Healing Tome", "rank": 10, "image": "healing_tome.png"},
+    {"name": "Hog Rider Puppet", "rank": 11, "image": "hog_rider_puppet.png"},
+    {"name": "Frozen Arrow", "rank": 12, "image": "frozen_arrow.png"},
+    {"name": "Rage Vial", "rank": 13, "image": "rage_vial.png"},
+    {"name": "Rage Gem", "rank": 14, "image": "rage_gem.png"},
+    {"name": "Giant Arrow", "rank": 15, "image": "giant_arrow.png"},
+    {"name": "Invisibility Vial", "rank": 16, "image": "invisibility_vial.png"},
+    {"name": "Life Gem", "rank": 17, "image": "life_gem.png"},
+    {"name": "Seeking Shield", "rank": 18, "image": "seeking_shield.png"},
+    {"name": "Vampstache", "rank": 19, "image": "vampstache.png"},
+    {"name": "Royal Gem", "rank": 20, "image": "royal_gem.png"},
+    {"name": "Archer Puppet", "rank": 21, "image": "archer_puppet.png"},
+    {"name": "Barbarian Puppet", "rank": 22, "image": "barbarian_puppet.png"},
+]
+
 
 def api_request(endpoint):
     url = f"{BASE_URL}{endpoint}"
@@ -613,6 +638,75 @@ def player_info(tag):
         pets_max_levels=pets_max_levels,
         pets=PETS,
         # builder_base_max_levels=builder_base_max_levels,
+    )
+
+
+@app.route("/equipment")
+def equipment():
+    king_synergies = [
+        (
+            {"name": "Spiky Ball", "image": "spiky_ball.png"},
+            {"name": "Earthquake Boots", "image": "earthquake_boots.png"},
+        ),
+        (
+            {"name": "Giant Gauntlet", "image": "giant_gauntlet.png"},
+            {"name": "Spiky Ball", "image": "spiky_ball.png"},
+        ),
+        (
+            {"name": "Giant Gauntlet", "image": "giant_gauntlet.png"},
+            {"name": "Rage Vial", "image": "rage_vial.png"},
+        ),
+    ]
+    queen_synergies = [
+        (
+            {"name": "Magic Mirror", "image": "magic_mirror.png"},
+            {"name": "Frozen Arrow", "image": "frozen_arrow.png"},
+        ),
+        (
+            {"name": "Magic Mirror", "image": "magic_mirror.png"},
+            {"name": "Healer Puppet", "image": "healer_puppet.png"},
+        ),
+        (
+            {"name": "Healer Puppet", "image": "healer_puppet.png"},
+            {"name": "Giant Arrow", "image": "giant_arrow.png"},
+        ),
+    ]
+    warden_synergies = [
+        (
+            {"name": "Eternal Tome", "image": "eternal_tome.png"},
+            {"name": "Healing Tome", "image": "healing_tome.png"},
+        ),
+        (
+            {"name": "Rage Gem", "image": "rage_gem.png"},
+            {"name": "Fireball", "image": "fireball.png"},
+        ),
+        (
+            {"name": "Eternal Tome", "image": "eternal_tome.png"},
+            {"name": "Rage Gem", "image": "rage_gem.png"},
+        ),
+    ]
+    champion_synergies = [
+        (
+            {"name": "Haste Vial", "image": "haste_vial.png"},
+            {"name": "Hog Rider Puppet", "image": "hog_rider_puppet.png"},
+        ),
+        (
+            {"name": "Rocket Spear", "image": "rocket_spear.png"},
+            {"name": "Seeking Shield", "image": "seeking_shield.png"},
+        ),
+        (
+            {"name": "Hog Rider Puppet", "image": "hog_rider_puppet.png"},
+            {"name": "Royal Gem", "image": "royal_gem.png"},
+        ),
+    ]
+
+    return render_template(
+        "equipment.html",
+        equipment_list=EQUIPMENT_LIST,
+        king_synergies=king_synergies,
+        queen_synergies=queen_synergies,
+        warden_synergies=warden_synergies,
+        champion_synergies=champion_synergies,
     )
 
 
