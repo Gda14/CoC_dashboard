@@ -202,5 +202,47 @@ h1{
     height: auto; /* Maintain aspect ratio */
 }
 
+.table-container {
+    padding: 20px;
+    text-align: center;
+}
+
+.equipment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.equipment-table th, .equipment-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.equipment-table th {
+    background-color: #4CAF50;
+    color: white;
+    font-weight: bold;
+}
+
+.equipment-table td {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.equipment-icon {
+    max-width: 50px;
+    height: auto;
+}
+
+@media (max-width: 600px) {
+    .equipment-table th, .equipment-table td {
+        padding: 8px;
+    }
+    .equipment-icon {
+        max-width: 30px;
+    }
+}
+
 
 
